@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\Auth\LoginRegisterController;
+use App\Http\Controllers\AuthLoginRegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,13 +16,13 @@ use App\Http\Controllers\Auth\LoginRegisterController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 
 // Public routes of authtication
-Route::controller(LoginRegisterController::class)->group(function() {
+Route::controller(AuthLoginRegisterController::class)->group(function() {
     Route::post('/register', 'register');
     Route::post('/login', 'login');
 });
@@ -36,7 +36,7 @@ Route::controller(ProductController::class)->group(function() {
 
 // Protected routes of product and logout
 Route::middleware('auth:sanctum')->group( function () {
-    Route::post('/logout', [LoginRegisterController::class, 'logout']);
+    Route::post('/logout', [AuthLoginRegisterController::class, 'logout']);
 
     Route::controller(ProductController::class)->group(function() {
         Route::post('/products', 'store');
